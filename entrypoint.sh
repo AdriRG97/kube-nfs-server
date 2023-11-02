@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 #
-# ehough/docker-nfs-server: A lightweight, robust, flexible, and containerized NFS server.
+# areinadev/kube-nfs-server: A lightweight, robust, flexible, and containerized NFS server.
 #
-# https://hub.docker.com/r/erichough/nfs-server
-# https://github.com/ehough/docker-nfs-server
+# https://github.com/areinadev/kube-nfs-server
 #
 # Copyright (C) 2017-2020  Eric D. Hough
 #
