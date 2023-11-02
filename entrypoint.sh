@@ -1,9 +1,8 @@
 #!/usr/bin/env bash
 #
-# ehough/docker-nfs-server: A lightweight, robust, flexible, and containerized NFS server.
+# areinadev/kube-nfs-server: A lightweight, robust, flexible, and containerized NFS server.
 #
-# https://hub.docker.com/r/erichough/nfs-server
-# https://github.com/ehough/docker-nfs-server
+# https://github.com/areinadev/kube-nfs-server
 #
 # Copyright (C) 2017-2020  Eric D. Hough
 #
@@ -273,7 +272,7 @@ is_kernel_module_loaded() {
 
 is_granted_linux_capability() {
 
-  if capsh --print | grep -Eq "^Current: = .*,?${1}(,|$)"; then
+  if capsh --has-p=cap_${1}; then
     return 0
   fi
 
@@ -489,7 +488,7 @@ init_exports() {
 
 init_runtime_assertions() {
 
-  if ! is_granted_linux_capability 'cap_sys_admin'; then
+  if ! is_granted_linux_capability 'sys_admin'; then
     bail 'missing CAP_SYS_ADMIN. be sure to run this image with --cap-add SYS_ADMIN or --privileged'
   fi
 
@@ -530,7 +529,7 @@ boot_helper_mount() {
 boot_helper_get_version_flags() {
 
   local -r requested_version="${state[$STATE_NFS_VERSION]}"
-  local flags=('--nfs-version' "$requested_version" '--no-nfs-version' 2)
+  local flags=('--nfs-version' "$requested_version")
 
   if ! is_nfs3_enabled; then
     flags+=('--no-nfs-version' 3)
