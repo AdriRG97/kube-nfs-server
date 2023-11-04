@@ -1,0 +1,51 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: nfs-server
+  name: nfs-server
+  namespace: nfs
+spec:
+  replicas: 1
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app: nfs-server
+  template:
+    metadata:
+      labels:
+        app: nfs-server
+      annotations:
+        container.apparmor.security.beta.kubernetes.io/nfs-server: localhost/docker-nfs
+    spec:
+      containers:
+      - name: nfs-server
+        image: ghcr.io/areinadev/nfs-server
+        env:
+          - name: NFS_DISABLE_VERSION_3
+            value: "true"
+          - name: NFS_EXPORT_0
+            value: /export *(rw,insecure,no_subtree_check,fsid=0)
+        ports:
+          - name: nfs
+            containerPort: 2049
+            protocol: TCP
+        volumeMounts:
+          - name: data
+            mountPath: /export
+          - name: modules
+            mountPath: /lib/modules
+            readOnly: true
+        securityContext:
+          capabilities:
+            add:
+              - SYS_ADMIN
+              - SYS_MODULE
+      volumes:
+        - name: data
+          persistentVolumeClaim:
+            claimName: nfs-data
+        - name: modules
+          hostPath:
+            path: /lib/modules

@@ -16,6 +16,7 @@ This is the only containerized NFS server that offers **all** of the following f
   - [Kerberos security](https://github.com/areinadev/kube-nfs-server/blob/develop/doc/feature/kerberos.md)
   - [NFSv4 user ID mapping](https://github.com/areinadev/kube-nfs-server/blob/develop/doc/feature/nfs4-user-id-mapping.md) via [`idmapd`](http://man7.org/linux/man-pages/man8/idmapd.8.html)
   - [AppArmor](https://github.com/areinadev/kube-nfs-server/blob/develop/doc/feature/apparmor.md) compatibility
+  - Kubernetes manifest examples
 
 ## Table of Contents
 
